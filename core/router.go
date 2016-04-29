@@ -16,15 +16,20 @@ func index (r render.Render) {
 
 func process (r render.Render, params martini.Params) {
 
-  doc, err := goquery.NewDocument("http://designspartan.com/actualite/lancement-de-la-campagne-de-crowdfunding-de-digitalpainting-school/") 
+  doc, err := goquery.NewDocument("http://www.liberation.fr/france/2016/04/29/loi-travail-un-manifestant-eborgne-par-un-tir-de-flash-ball-a-rennes_1449427") 
 
   if err != nil {
     log.Fatal(err)
   }
 
-  doc.Find("article").Each(func(i int, s *goquery.Selection) {
-    if i == 0 {
-      fmt.Printf("%+v\n", s.First().Text()) 
+  s := doc.Find("article p")
+  for i := range s.Nodes {
+    single := s.Eq(i)
+    fmt.Printf("%+v\n", len(single.Text()))
+    if len(single.Text()) > 500 {
+      fmt.Printf("%+v\n", single.Text()) 
     }
-  })
+  }
+
+
 }
