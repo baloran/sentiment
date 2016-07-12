@@ -2,9 +2,8 @@ package core
 
 import (
   "fmt"
-  
-  "github.com/go-martini/martini"
-  "github.com/martini-contrib/render"
+
+  "github.com/kataras/iris"
 )
 
 func init () {
@@ -12,13 +11,10 @@ func init () {
 }
 
 func Sentiment () {
-  m := martini.Classic()
 
-  m.Use(render.Renderer())
+  iris.Get("/", index)
 
-  m.Get("/", index)
+  iris.Get("/u/", process)
 
-  m.Get("/u/", process)
-
-  m.Run()
+  iris.Listen(":8080")
 }

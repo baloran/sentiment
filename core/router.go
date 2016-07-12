@@ -5,18 +5,17 @@ import (
   "log"
 
   "github.com/PuerkitoBio/goquery"
-  
-  "github.com/go-martini/martini"
-  "github.com/martini-contrib/render"
+
+  "github.com/kataras/iris"
 )
 
-func index (r render.Render) {
-  r.HTML(200, "hello", nil)
+func index (ctx *iris.Context) {
+  ctx.Text(iris.StatusOK, "Plain text here")
 }
 
-func process (r render.Render, params martini.Params) {
+func process (ctx *iris.Context) {
 
-  doc, err := goquery.NewDocument("http://www.liberation.fr/france/2016/04/29/loi-travail-un-manifestant-eborgne-par-un-tir-de-flash-ball-a-rennes_1449427") 
+  doc, err := goquery.NewDocument("http://www.liberation.fr/france/2016/04/29/loi-travail-un-manifestant-eborgne-par-un-tir-de-flash-ball-a-rennes_1449427")
 
   if err != nil {
     log.Fatal(err)
@@ -27,7 +26,7 @@ func process (r render.Render, params martini.Params) {
     single := s.Eq(i)
     fmt.Printf("%+v\n", len(single.Text()))
     if len(single.Text()) > 500 {
-      fmt.Printf("%+v\n", single.Text()) 
+      fmt.Printf("%+v\n", single.Text())
     }
   }
 
